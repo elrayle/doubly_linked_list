@@ -216,7 +216,7 @@ describe 'DoublyLinkedList' do
   describe '#inspect' do
     it "should return class and items" do
       l = DoublyLinkedList.new :items => ['cat','dog','rabbit']
-      expect(l.inspect).to match /#<DoublyLinkedList:0x(\d|[abcdef]){12} \[\"cat\", \"dog\", \"rabbit\"\]/
+      expect(l.inspect).to match /#<DoublyLinkedList:0x(\d|[abcdef])* \[\"cat\", \"dog\", \"rabbit\"\]/
     end
   end
 

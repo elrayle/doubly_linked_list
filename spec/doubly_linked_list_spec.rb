@@ -199,4 +199,83 @@ describe 'DoublyLinkedList' do
     end
   end
 
+  describe '#missing_method' do
+    it "should pass method to list and succeed if it is an array method" do
+      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
+      expect(l.size).to eq 4
+      expect(l.values_at(1..2)).to eq ['dog','rabbit']
+      expect(l.sort).to eq ['cat','dog','fish','rabbit']
+    end
+
+    it "should pass method to list and raise an error if it is not an array method" do
+      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
+      expect{ l.foo }.to raise_error(NoMethodError, /undefined method `foo'/)
+    end
+  end
+
+  describe '#inspect' do
+    it "should return class and items" do
+      l = DoublyLinkedList.new :items => ['cat','dog','rabbit']
+      expect(l.inspect).to match /#<DoublyLinkedList:0x(\d|[abcdef]){12} \[\"cat\", \"dog\", \"rabbit\"\]/
+    end
+  end
+
+  describe "Array" do
+    describe "#move" do
+      it "should move an element to first position" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(4,0)).to eq [5,1,2,3,4,6,7,8,9,10]
+      end
+
+      it "should move an element to last position" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(5,9)).to eq [1,2,3,4,5,7,8,9,10,6]
+      end
+
+      it "should move an element from first to middle position" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(0,4)).to eq [2,3,4,5,1,6,7,8,9,10]
+      end
+
+      it "should move an element from last to middle position" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(9,4)).to eq [1,2,3,4,10,5,6,7,8,9]
+      end
+
+      it "should move an element forward from middle" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(3,6)).to eq [1,2,3,5,6,7,4,8,9,10]
+      end
+
+      it "should move an element backward from middle" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(6,3)).to eq [1,2,3,7,4,5,6,8,9,10]
+      end
+
+      it "should move an element beyond end of list" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(6,12)).to eq [1,2,3,4,5,6,8,9,10,nil,nil,nil,7]
+      end
+
+      it "should move an element counting from right when 'from' is negative" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(-3,2)).to eq [1,2,8,3,4,5,6,7,9,10]
+      end
+
+      it "should move an element counting to position counting from right when 'to' is negative" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(2,-3)).to eq [1,2,4,5,6,7,8,3,9,10]
+      end
+
+      it "should add nil at 'to' position if 'from' negative number exceeds size" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect(a.move(-20,3)).to eq [1,2,3,nil,4,5,6,7,8,9,10]
+      end
+
+      it "should raise error if 'to' negative number exceeds size" do
+        a = [1,2,3,4,5,6,7,8,9,10]
+        expect{ a.move(3,-20) }.to raise_error(IndexError,'index -19 too small for array; minimum: -9')
+      end
+    end
+  end
 end

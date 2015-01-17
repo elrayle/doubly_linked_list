@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'doubly_linked_list'
-  spec.version       = '0.0.1'
+  spec.version       = '0.0.2'
   spec.authors       = ["E. Lynette Rayle"]
   spec.email         = ["elr37@cornell.edu"]
   spec.platform      = Gem::Platform::RUBY

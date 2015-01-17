@@ -61,7 +61,7 @@ l.remove_last
 * Insert / delete in the middle
 * Batch add in the middle
 * Move item to different position
-
+* Call back for item movements
 
 ## Tests
 
@@ -78,3 +78,4 @@ $ rspec
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+

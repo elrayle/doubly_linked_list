@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/elrayle/doubly_linked_list.png?branch=master)](https://travis-ci.org/elrayle/doubly_linked_list) 
 [![Coverage Status](https://coveralls.io/repos/elrayle/doubly_linked_list/badge.png?branch=master)](https://coveralls.io/r/elrayle/doubly_linked_list?branch=master)
 [![Gem Version](https://badge.fury.io/rb/doubly_linked_list.svg)](http://badge.fury.io/rb/doubly_linked_list)
-[![Dependency Status](https://www.versioneye.com/ruby/doubly_linked_list/0.0.4/badge.svg)](https://www.versioneye.com/ruby/doubly_linked_list/0.0.4)
+[![Dependency Status](https://www.versioneye.com/ruby/doubly_linked_list/0.0.2/badge.svg)](https://www.versioneye.com/ruby/doubly_linked_list/0.0.2)
 
 
 Ruby implementation of doubly linked list, following some Ruby idioms.

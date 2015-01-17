@@ -1,97 +1,80 @@
-[![Code Climate](https://codeclimate.com/github/spectator/linked-list.png)](https://codeclimate.com/github/spectator/linked-list)
-[![Build Status](https://secure.travis-ci.org/spectator/linked-list.png?branch=master)](http://travis-ci.org/spectator/linked-list)
-[![Gem Version](https://badge.fury.io/rb/linked-list.png)](http://badge.fury.io/rb/linked-list)
-[![Coverage Status](https://coveralls.io/repos/spectator/linked-list/badge.png)](https://coveralls.io/r/spectator/linked-list)
+# DoublyLinkedList
 
-# LinkedList
+[![Build Status](https://travis-ci.org/elrayle/doubly_linked_list.png?branch=master)](https://travis-ci.org/elrayle/doubly_linked_list) 
+[![Coverage Status](https://coveralls.io/repos/elrayle/doubly_linked_list/badge.png?branch=master)](https://coveralls.io/r/elrayle/doubly_linked_list?branch=master)
+[![Gem Version](https://badge.fury.io/rb/doubly_linked_list.svg)](http://badge.fury.io/rb/doubly_linked_list)
+[![Dependency Status](https://www.versioneye.com/ruby/doubly_linked_list/0.0.4/badge.svg)](https://www.versioneye.com/ruby/doubly_linked_list/0.0.4)
 
-Ruby implementation of Doubly Linked List, following some Ruby idioms.
+
+Ruby implementation of doubly linked list, following some Ruby idioms.
+
+
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'linked_list'
-```
+    gem 'doubly_linked_list'
+    
 
 And then execute:
 
-```shell
-$ bundle
-```
+    $ bundle install
 
 Or install it yourself as:
 
-```shell
-$ gem install linked_list
-```
+    $ gem install doubly_linked_list 
+
 
 ## Usage
 
 ```ruby
-object = Object.new # could be anything
-list = LinkedList::List.new
+l = DoublyLinkedList.new
+l.add_last('cat')
+l.add_last('dog')
+l.add_first('fish')
+l.to_a
+# => ['fish','cat','dog']
+l.size
+# => 3
 
-list.push(object)
-list << object # same as `push`
+l = DoublyLinkedList.new :items => ['cat','dog','fish']
+l.to_a
+# => ['cat','dog','fish']
 
-list.unshift(object)
+l = DoublyLinkedList.new :list_info => {:title =>'test list', :description => 'Test out my doubly linked list.'},
+                   :items => ['cat','dog','rabbit','fish']
+l.to_a
+# => ['cat','dog','rabbit','fish']
+l.list_info
+# => {:title =>'test list', :description => 'Test out my doubly linked list.'}
 
-list.pop
-list.shift
-
-list.reverse
-list.reverse!
-
-list.each      # Enumerator object
-list.each { |e| puts e }
-
-list.first     # head of the list
-list.last      # tail of the list
-
-list.length
-list.size      # same as `length`
-
-list.to_a
+l.remove_first
+#=> 'cat'
+l.remove_last
+#=> 'fish'
 ```
 
-Another way to instantiate `List` or `Node` is to use conversion functions.
-First, include `LinkedList::Conversions` module to your class
-
-```ruby
-class Foo
-  include LinkedList::Conversions
-end
-```
-
-Now anywhere in your class you can use the following methods
-
-```ruby
-Node(object)           # will return new `Node` object
-List(object)           # will return new `List` object with one `Node` object
-List([object, object]) # will return new `List` object with two `Node` objects
-```
-
-Please see `LinkedList::List`, `LinkedList::Node`, and
-`LinkedList::Conversions` for details.
 
 ## TODO
 
 * Insert / delete in the middle
+* Batch add in the middle
+* Move item to different position
+
 
 ## Tests
 
 Run test with
 
 ```shell
-$ rake
+$ rspec
 ```
 
 ## Contributing
 
-1. Fork it
+1. Fork it ( https://github.com/[my-github-username]/doubly_linked_list/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+5. Create a new Pull Request

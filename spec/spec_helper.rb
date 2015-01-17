@@ -5,7 +5,7 @@ require 'bundler/setup'
 Bundler.setup
 
 require 'pry'
-require 'linked_list'
+require 'doubly_linked_list'
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 

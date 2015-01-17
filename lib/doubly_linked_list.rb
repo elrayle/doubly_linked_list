@@ -86,18 +86,6 @@ class DoublyLinkedList
     @list.delete_at(head)
   end
 
-  ##
-  # Iterates over nodes from top to bottom passing node data to the block if
-  # given. If no block given, returns +Enumerator+.
-  #
-  # @returns +Enumerator+ or yields data to the block stored in every node on the
-  # list.
-  #
-  def each
-    return to_enum(__callee__) unless block_given?
-    __each { |node| yield(node.data) }
-  end
-
   # Returns list array without list info.
   #
   def to_a
@@ -106,10 +94,11 @@ class DoublyLinkedList
   alias_method :to_ary, :to_a
 
   # Passing all missing methods to the list so all array operations can be performed.
-  def method_missing method_id, *args
-# binding.pry
+  def method_missing method_id, *args, &block
+  # def method_missing method_id, *args
     begin
-      return @list.send(method_id,*args)
+      # return @list.send(method_id,*args)
+      return @list.send(method_id,*args, &block)
     rescue
       super
     end
@@ -119,16 +108,7 @@ class DoublyLinkedList
     sprintf('#<%s:%#x %s>', self.class, self.__id__, to_a.inspect)
   end
 
-  # # Conversion function, see +Conversions.List+.
-  # #
-  # # == Returns:
-  # # +self+
-  # #
-  # def to_list
-  #   self
-  # end
-
-  private
+private
 
   def head
     @list && @list.size > 0 ? 0 : nil
@@ -136,13 +116,5 @@ class DoublyLinkedList
 
   def tail
     @list && @list.size > 0 ? @list.size-1 : nil
-  end
-
-  def __each
-    curr_node = @head
-    while(curr_node)
-      yield curr_node
-      curr_node = curr_node.next
-    end
   end
 end

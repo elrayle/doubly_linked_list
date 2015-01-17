@@ -211,6 +211,23 @@ describe 'DoublyLinkedList' do
       l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
       expect{ l.foo }.to raise_error(NoMethodError, /undefined method `foo'/)
     end
+
+    it "should pass method each to the list" do
+      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
+      a = []
+      l.each do |i|
+        a << i
+        expect(l.to_a).to include i
+      end
+      expect(a).to eq ['cat','dog','rabbit','fish']
+    end
+
+    it "should pass method each to the list when block is inline" do
+      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
+      a = []
+      l.each { |i| a<<i; expect(l.to_a).to include i }
+      expect(a).to eq ['cat','dog','rabbit','fish']
+    end
   end
 
   describe '#inspect' do

@@ -254,7 +254,7 @@ describe 'DoublyLinkedList' do
       end
     end
 
-    context "when neither list nor list_info respond to missing method"
+    context "when neither list nor list_info respond to missing method" do
       it "should raise an error if it is not an array method nor list_info method" do
         l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
         expect{ l.foo }.to raise_error(NoMethodError, /undefined method `foo'/)

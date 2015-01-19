@@ -95,10 +95,10 @@ class DoublyLinkedList
 
   # Passing all missing methods to the list so all array operations can be performed.
   def method_missing method_id, *args, &block
-  # def method_missing method_id, *args
     begin
-      # return @list.send(method_id,*args)
-      return @list.send(method_id,*args, &block)
+      return @list.send(method_id,*args, &block)     if @list.respond_to?(method_id)
+      return @list_info.send(method_id,*args,&block) if @list_info.respond_to?(method_id)
+      super
     rescue
       super
     end

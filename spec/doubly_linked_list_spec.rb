@@ -200,33 +200,65 @@ describe 'DoublyLinkedList' do
   end
 
   describe '#missing_method' do
-    it "should pass method to list and succeed if it is an array method" do
-      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
-      expect(l.size).to eq 4
-      expect(l.values_at(1..2)).to eq ['dog','rabbit']
-      expect(l.sort).to eq ['cat','dog','fish','rabbit']
-    end
-
-    it "should pass method to list and raise an error if it is not an array method" do
-      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
-      expect{ l.foo }.to raise_error(NoMethodError, /undefined method `foo'/)
-    end
-
-    it "should pass method each to the list" do
-      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
-      a = []
-      l.each do |i|
-        a << i
-        expect(l.to_a).to include i
+    before do
+      class Dummy
+        def hello
+          "hello back at you"
+        end
+        def size
+          "very large indeed"
+        end
       end
-      expect(a).to eq ['cat','dog','rabbit','fish']
     end
 
-    it "should pass method each to the list when block is inline" do
-      l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish']
-      a = []
-      l.each { |i| a<<i; expect(l.to_a).to include i }
-      expect(a).to eq ['cat','dog','rabbit','fish']
+    context "when list responds to missing method" do
+      it "should pass method to list and succeed" do
+        l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
+        expect(l.values_at(1..2)).to eq ['dog','rabbit']
+        expect(l.sort).to eq ['cat','dog','fish','rabbit']
+      end
+
+      it "should pass method to list only even if list_info has the same method and succeed" do
+        l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
+        expect(l.size).to eq 4
+      end
+
+      it "should pass method each to the list" do
+        l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
+        a = []
+        l.each do |i|
+          a << i
+          expect(l.to_a).to include i
+        end
+        expect(a).to eq ['cat','dog','rabbit','fish']
+      end
+
+      it "should pass method each to the list when block is inline" do
+        l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
+        a = []
+        l.each { |i| a<<i; expect(l.to_a).to include i }
+        expect(a).to eq ['cat','dog','rabbit','fish']
+      end
+    end
+
+    context "when list does not respond to missing method" do
+      it "should pass method to list_info and succeed if list_info responds to that method" do
+        l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
+        expect(l.hello).to eq 'hello back at you'
+      end
+
+      it "should not pass array method to list_info when @list is empty and succeed if list_info responds to that method" do
+        l = DoublyLinkedList.new :list_info => Dummy.new
+        expect(l.size).not_to eq 'very large indeed'
+        expect(l.size).to eq 0
+      end
+    end
+
+    context "when neither list nor list_info respond to missing method"
+      it "should raise an error if it is not an array method nor list_info method" do
+        l = DoublyLinkedList.new :items => ['cat','dog','rabbit','fish'], :list_info => Dummy.new
+        expect{ l.foo }.to raise_error(NoMethodError, /undefined method `foo'/)
+      end
     end
   end
 

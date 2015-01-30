@@ -22,6 +22,7 @@ class DoublyLinkedList
   def initialize(*args)
     @list      = []
     @list      = args[0][:items] if ! args.empty? && args[0].is_a?(Hash) && args[0].key?(:items)
+    raise ArgumentError, "items list must be an Array" unless @list.kind_of?(Array)
     @list_info = nil
     @list_info = args[0][:list_info] if ! args.empty? && args[0].is_a?(Hash) && args[0].key?(:list_info)
     self
